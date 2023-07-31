@@ -1,0 +1,160 @@
+{
+    "name": "HyperRefiner",
+    "experim_name": "Experiments/hyae_beijing_trian",
+    "model": "HyAE",
+    "N_modules": 1,
+    "train_dataset": "beijing_train_dataset",
+    "is_DHP_MS": false,
+    "upscale_method": "sr",
+    "train_batch_size": 4,
+    "val_batch_size": 1,
+    "num_workers": 0,
+    "loss_type": "L1",
+    "ae_loss": true,
+    "sr_loss": true,
+    "ae_loss_F": 0.6,
+    "sr_loss_F": 1.0,
+    "hsi_loss_F": 1,
+    "optimizer": "ADAM",
+    "train": true,
+    "dynamic": true,
+
+    "AE": {
+        "conv_kernel_sizes": [3, 3, 3],
+        "channels": [64, 128, 256],
+        "pool_kernel_sizes": [4, 4, 4],
+        "conv_strides": [1, 1, 1],
+        "pool_strides": [4, 4, 4],
+        "dropout": 0.1,
+        "optimizer": {
+        "args":{
+            "lr": 0.005,
+            "weight_decay": 0.0,
+            "momentum": 0.95
+        },
+        "step_size": 2000,
+        "gamma": 0.95
+        }
+    },
+    "sr": {
+        "sr_model": "sr61",
+        "optimizer": {
+        "args":{
+            "lr": 0.0001,
+            "weight_decay": 0.0001,
+            "momentum": 0.9
+        },
+        "step_size": 2000,
+        "gamma": 0.1
+        }
+    },
+
+    "trainer": {
+        "total_epochs": 10000,
+        "is_small_patch_train": false,
+        "patch_size": 128,
+        "iter_size": 1,
+        "test_freq": 5
+    },
+
+    "pavia_dataset": {
+        "data_dir": "./datasets/pavia_centre/pavia/",
+        "spectral_bands": 102,
+        "LR_size": 40,
+        "HR_size": 160,
+        "augmentation": false,
+        "max_value": 8000,
+        "factor": 4,
+        "optimal_lambda": 0.8,
+        "loss_type": "L1",
+        "Normalized_L1": true,
+        "R": 29,
+        "G": 20,
+        "B": 12,
+        "Spatial_Loss": true,
+        "Spatial_Loss_F": 1.0,
+        "pre_trained_ae": "G:\\ZB\\workfile\\work\\hypervae\\pre_trained\\ae\\ae_paviac.pth",
+        "pre_trained_sr": "None"
+    },
+
+    "botswana_dataset": {
+        "data_dir": "./datasets/botswana/",
+        "spectral_bands": 145,
+        "LR_size": 40,
+        "HR_size": 120,
+        "augmentation": false,
+        "max_value": 8000,
+        "factor": 3,
+        "optimal_lambda": 0.8,
+        "loss_type": "L1",
+        "Normalized_L1":true,
+        "R": 29,
+        "G": 20,
+        "B": 12,
+        "Spatial_Loss": true,
+        "Spatial_Loss_F": 1.0,
+        "pre_trained_ae": "G:\\ZB\\workfile\\work\\hypervae\\Experiments\\ae_hc\\botswana_dataset\\N_1\\best_model.pth",
+        "pre_trained_sr": "G:\\ZB\\workfile\\work\\hypervae\\Experiments\\csr61\\botswana_dataset\\_1\\best_model0.pth"
+        },
+
+    "chikusei_dataset": {
+        "data_dir": "./datasets/chikusei/chikusei/",
+        "spectral_bands": 128,
+        "LR_size": 64,
+        "HR_size": 256,
+        "augmentation": false,
+        "max_value": 15133,
+        "factor": 4,
+        "optimal_lambda": 0.6,
+        "loss_type": "L1",
+        "Normalized_L1": true,
+        "R": 29,
+        "G": 20,
+        "B": 12,
+        "Spatial_Loss": true,
+        "Spatial_Loss_F": 1.0,
+        "pre_trained_ae":"G:\\ZB\\workfile\\work\\hypervae\\Experiments\\ae_hc\\chikusei_dataset\\best_model.pth",
+        "pre_trained_sr": "None"
+        },
+
+    "botswana4_dataset": {
+            "data_dir": "./datasets/botswana4/botswana4/",
+            "spectral_bands": 145,
+            "LR_size": 30,
+            "HR_size": 120,
+            "augmentation": false,
+            "max_value": 7365,
+            "factor": 4,
+            "optimal_lambda": 0.6,
+            "loss_type": "L1",
+            "Normalized_L1": true,
+            "R": 29,
+            "G": 20,
+            "B": 12,
+            "Spatial_Loss": true,
+            "Spatial_Loss_F": 1.0,
+            "pre_trained_ae": "G:\\ZB\\workfile\\work\\hypervae\\Experiments\\ae6\\botswana4_dataset\\N_1\\best_model.pth",
+            "pre_trained_sr": "G:\\ZB\\workfile\\work\\hypervae\\Experiments\\csr8\\botswana4_dataset\\best_model.pth"
+            },
+    "beijing_train_dataset": {
+        "data_dir": "./datasets/beijing_train/beijing_train/",
+        "spectral_bands": 145,
+        "LR_size": 40,
+        "HR_size": 120,
+        "augmentation": false,
+        "max_value": 8000,
+        "factor": 3,
+        "optimal_lambda": 0.8,
+        "loss_type": "L1",
+        "Normalized_L1": true,
+        "R": 29,
+        "G": 20,
+        "B": 12,
+        "Spatial_Loss": true,
+        "Spatial_Loss_F": 1.0,
+        "multi_scale_loss": false,
+        "multi_scale_loss_F": 0.2,
+        "pre_trained_ae": "G:\\ZB\\workfile\\work\\hypervae\\Experiments\\ae\\beijing_train_dataset\\N_1\\best_model.pth",
+        "pre_trained_sr": "None"
+        }
+}
