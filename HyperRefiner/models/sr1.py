@@ -886,8 +886,8 @@ class Coarse_sr6(nn.Module):
         self.DRB = nn.ModuleList()
 
         for i in range(self.num_blocks):
-            self.Features.append(nn.Sequential(nn.Conv2d(self.outchannels[i], self.outchannels[i], kernel_size=3, padding=1, stride=1),
-                                               nn.Conv2d(self.outchannels[i], self.outchannels[i], kernel_size=3, padding=1, stride=1)))
+            self.Features.append(nn.Sequential(nn.Conv2d(self.outchannels[i], 2*self.outchannels[i], kernel_size=3, padding=1, stride=1),
+                                               nn.Conv2d(2*self.outchannels[i], self.outchannels[i], kernel_size=3, padding=1, stride=1)))
             self.DRB.append(DRModule2(self.outchannels[i], self.outchannels[i + 1], self.num_res_blocks[i]))
 
         self.RBs = nn.ModuleList()
