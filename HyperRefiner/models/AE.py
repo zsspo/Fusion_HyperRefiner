@@ -37,28 +37,28 @@ class ConvEncoder(nn.Module):
         Parameters
         ----------
         input_size : int
-            The spatial size of the input.  输入的空间大小
-        conv_kernel_sizes : List[int]       列表， 每个阶段的卷积和大小
+            The spatial size of the input.  
+        conv_kernel_sizes : List[int]       
             The kernel sizes of the convolutions at each stage.
             Padding at each conv is of size (kernel_size - 1) // 2, to maintain
             spatial resolution if conv_stride = 1.
-        channels : List[int]                列表， 每个阶段的通道数
+        channels : List[int]                
             The number of channels at each stage.
-        pool_kernel_sizes : List[int]       列表， 每个阶段池化核大小
+        pool_kernel_sizes : List[int]       
             The kernel sizes of the pooling operations at each stage. There is
             no padding done.
         latent_space_size : int
-            The size of the final latent space.   隐空间维度
-        conv_strides : Optional[List[int]]  列表， 每个阶段卷积步长，默认1
+            The size of the final latent space.  
+        conv_strides : Optional[List[int]]  
             The stride of the convolutions at each stage. If not provided, is 1
             for all stages.
-        pool_strides : Optional[List[int]]  列表， 每个阶段池化步长，默认2
+        pool_strides : Optional[List[int]]  
             The stride of the pooling operations at each stage. If not
             provided, is 2 for all stages.
-        pool_op : Callable                  池化操作
+        pool_op : Callable                  
             Constructor for a nn.Module to perform the pooling operation. By
             default, nn.MaxPool1d.
-        input_channels : int                输入通道
+        input_channels : int                
             The number of channels the input has.
         dropout : float
             Probability of dropping internal values while training.
