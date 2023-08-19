@@ -143,7 +143,7 @@ class LFE(nn.Module):
 
 
 class HyperAE(nn.Module):
-    "嵌入AE和sr模块，使用transformer优化光谱"
+    "嵌入AE和sr模块，使用self-attention优化光谱"
 
     def __init__(self, config):
         super(HyperAE, self).__init__()
@@ -205,12 +205,11 @@ class HyperAE(nn.Module):
         self.ps21 = nn.PixelShuffle(2)
 
     def forward(self, PAN, X_MS, MS_dhp=None):
-        # X_MS上采样--插值、深度先验、sr
+    
         if self.upscale_method == "interpolate" and MS_dhp is None:
-            coarse_hsi = F.interpolate(X_MS, scale_factor=(self.factor, self.factor), mode='bicubic')
+            coarse_hsi = F.interpolate(X_MS, scale_factor=(self.factor, self.factor), mode='bilinear')
         if self.upscale_method == "DHP" and MS_dhp is not None:
             coarse_hsi = MS_dhp
-            #X_MS = F.interpolate(X_MS, scale_factor=(1/self.factor, 1/self.factor), mode='bilinear')
         if self.upscale_method == "sr" and MS_dhp is None:
             coarse_hsi = self.sr(PAN, X_MS)  # b, c, H, W
 
@@ -286,7 +285,7 @@ class HyperAE(nn.Module):
 
 
 class HyperAE_ms(nn.Module):
-    "嵌入AE和sr模块，使用transformer优化光谱"
+    "嵌入AE和sr模块，使用self attention优化光谱"
 
     def __init__(self, config):
         super(HyperAE_ms, self).__init__()
@@ -348,12 +347,10 @@ class HyperAE_ms(nn.Module):
         self.ps21 = nn.PixelShuffle(2)
 
     def forward(self, PAN, X_MS, MS_dhp=None):
-        # X_MS上采样--插值、深度先验、sr
         if self.upscale_method == "interpolate" and MS_dhp is None:
-            coarse_hsi = F.interpolate(X_MS, scale_factor=(self.factor, self.factor), mode='bicubic')
+            coarse_hsi = F.interpolate(X_MS, scale_factor=(self.factor, self.factor), mode='bilinear')
         if self.upscale_method == "DHP" and MS_dhp is not None:
             coarse_hsi = MS_dhp
-            #X_MS = F.interpolate(X_MS, scale_factor=(1/self.factor, 1/self.factor), mode='bilinear')
         if self.upscale_method == "sr" and MS_dhp is None:
             coarse_hsi = self.sr(PAN, X_MS)  # b, c, H, W
 
