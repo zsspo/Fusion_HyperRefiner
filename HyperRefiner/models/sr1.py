@@ -87,7 +87,7 @@ class ECABlock(nn.Module):
         """
         x: 生成通道权重的特征
         y: 用于注意力的特征,
-        同一尺度下，将融合后的特征通道对齐到
+        同一尺度下，将融合后的特征通道对齐
         """
         b, c, h, w = x.size()
         z = self.avg_pool(x)
@@ -128,13 +128,13 @@ class DualAttentionBlock(nn.Module):
         self.in_channels = in_channels  # 2c
         self.out_channels = out_channels  # c
 
-        self.CA = ECABlock(self.in_channels)
+        self.CA = ECABlock(self.in_channels)   #使用eca模块做通道注意力
         self.SA = SABlock(self.in_channels, self.in_channels)
         self.aggregate1 = nn.Conv2d(in_channels=2 * self.in_channels, out_channels=self.in_channels, kernel_size=3, padding=1)
         self.aggregate2 = nn.Conv2d(in_channels=self.in_channels, out_channels=self.out_channels, kernel_size=3, padding=1)
 
     def forward(self, fused_feats):
-        # fused_feats = self.FE(fused_feats)        #
+        # fused_feats = self.FE(fused_feats)        
         sa = self.SA(fused_feats, fused_feats)
         ca = self.CA(fused_feats, fused_feats)
         feats = torch.cat((sa, ca), dim=1)  # 4c
@@ -193,7 +193,7 @@ class DualAttentionBlock1(nn.Module):
         self.aggregate2 = nn.Conv2d(in_channels=self.in_channels, out_channels=self.out_channels, kernel_size=3, padding=1)
 
     def forward(self, fused_feats):
-        # fused_feats = self.FE(fused_feats)        #
+        # fused_feats = self.FE(fused_feats)        
         sa = self.SA(fused_feats, fused_feats)
         ca = self.CA(fused_feats, fused_feats)
         feats = torch.cat((sa, ca), dim=1)  # 4c
